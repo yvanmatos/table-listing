@@ -1,13 +1,25 @@
-import "./Main.css";
 import Header from "./Header";
+import styled from "styled-components";
+
+const Wrapper = styled.main`
+  grid-area: content;
+  padding: 10px;
+  
+  > div {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: var(--shadow);
+  }
+`
 
 const Main = (props) => {
   return (
     <>
       <Header {...props} />
-      <main className="content container-fluid">
-        <div className="p-3 mt-3">{props.children}</div>
-      </main>
+      <Wrapper>
+        <div>{props.children}</div>
+      </Wrapper>
     </>
   );
 };

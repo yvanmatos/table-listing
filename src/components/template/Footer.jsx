@@ -1,17 +1,30 @@
-import React from "react";
-import "./Footer.css";
+import styled from "styled-components";
+
+const Wrapper = styled.footer`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 25px;
+  background-color: #fff;
+  box-shadow: var(--shadow);
+  grid-area: footer;
+  
+  @media(max-width: 768px) {
+    min-width: 100vw;
+  }
+`
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <Wrapper>
       <span>
-        Desenvolvido com <i className="fa fa-heart text-danger" /> por
+        Desenvolvido com <i className="fa fa-heart" style={{color:"#dc143c"}}/> por
         <strong>
           {" "}
-          Yvan <span className="text-danger"> Matos</span>
+          Yvan Matos
         </strong>
       </span>
-    </footer>
+    </Wrapper>
   );
 };
 

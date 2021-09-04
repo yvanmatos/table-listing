@@ -1,11 +1,22 @@
+import styled from "styled-components";
 import Main from "../template/Main";
 
+const Display = styled.div`
+  font-size: 4em;
+  letter-spacing: 1px;
+  font-weight: 100;
+`
+
+const Lead = styled.p`
+  margin-bottom: 5px;
+  line-height: 1.5;
+`
 const Home = () => {
   return (
     <Main icon="home" title="Início" subtitle="Projeto de teste">
-      <div className="display-4">Bem vindo!</div>
+      <Display>Bem vindo!</Display>
       <hr />
-      <p className="mb-0">
+      <Lead>
         Sistema desenvolvido para consumir e listar dados da API
         <strong>
           {" "}
@@ -14,7 +25,7 @@ const Home = () => {
           </a>
         </strong>
         .
-      </p>
+      </Lead>
     </Main>
   );
 };

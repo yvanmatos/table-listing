@@ -17,12 +17,14 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
+import { green, red } from "@material-ui/core/colors";
+import { Done, Clear } from "@material-ui/icons";
 import styled from "styled-components";
 
 const headerProps = {
-  icon: "sticky-note-o",
-  title: "Posts",
-  subtitle: "Lista os Posts carregados pela API",
+  icon: "list-ul",
+  title: "To-Dos",
+  subtitle: "Lista os To-Dos carregados pela API",
 };
 
 const StyledTableHead = styled(TableHead)`
@@ -38,6 +40,16 @@ const StyledTableHead = styled(TableHead)`
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(even) {
     background-color: rgba(117, 11, 179, 0.05);
+  }
+`;
+
+const Status = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    margin-left: 5px;
   }
 `;
 
@@ -119,14 +131,14 @@ TablePaginationActions.propTypes = {
 };
 
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
+  const [toDos, setToDos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - posts.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - toDos.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -138,11 +150,11 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    const baseUrl = "https://jsonplaceholder.typicode.com/posts";
+    const baseUrl = "https://jsonplaceholder.typicode.com/todos";
     const fetchData = async () => {
       setLoading(true);
       const resp = await axios(baseUrl);
-      setPosts(resp.data);
+      setToDos(resp.data);
       setLoading(false);
     };
     fetchData();
@@ -159,7 +171,7 @@ const Posts = () => {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Title</TableCell>
-              <TableCell>Content</TableCell>
+              <TableCell align="center">Status</TableCell>
             </TableRow>
           </StyledTableHead>
           {renderRows()}
@@ -168,7 +180,7 @@ const Posts = () => {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 colSpan={3}
-                count={posts.length}
+                count={toDos.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
@@ -190,13 +202,25 @@ const Posts = () => {
     return (
       <TableBody>
         {(rowsPerPage > 0
-          ? posts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          : posts
-        ).map((post) => (
-          <StyledTableRow key={post.id}>
-            <TableCell>{post.id}</TableCell>
-            <TableCell align="left">{post.title}</TableCell>
-            <TableCell align="left">{post.body}</TableCell>
+          ? toDos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          : toDos
+        ).map((todo) => (
+          <StyledTableRow key={todo.id}>
+            <TableCell>{todo.id}</TableCell>
+            <TableCell align="left">{todo.title}</TableCell>
+            <TableCell align="center">
+              {todo.completed ? (
+                <Status>
+                  <Done fontSize="large" style={{ color: green[500] }} />
+                  <span>Completed</span>
+                </Status>
+              ) : (
+                <Status>
+                  <Clear fontSize="large" style={{ color: red[100] }} />
+                  <span>Not Completed</span>
+                </Status>
+              )}
+            </TableCell>
           </StyledTableRow>
         ))}
 
