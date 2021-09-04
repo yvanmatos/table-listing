@@ -216,7 +216,7 @@ const Posts = () => {
                 </Status>
               ) : (
                 <Status>
-                  <Clear fontSize="large" style={{ color: red[100] }} />
+                  <Clear fontSize="large" style={{ color: red[500] }} />
                   <span>Not Completed</span>
                 </Status>
               )}
