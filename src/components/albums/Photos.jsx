@@ -12,6 +12,7 @@ import {
   CardContent,
 } from "@material-ui/core";
 import styled from "styled-components";
+import PhotoModal from "./PhotoModal";
 
 const headerProps = {
   icon: "picture-o",
@@ -40,7 +41,11 @@ const Photos = () => {
   const { albumId } = useParams();
 
   const [photos, setPhotos] = useState([]);
+  const [showPhoto, setShowPhoto] = useState(false)
+  const [selectedPhoto, setSelectedPhoto] = useState([])
   const [loading, setLoading] = useState(false);
+  let modalClose = () => setShowPhoto(false)
+
 
   useEffect(() => {
     const baseUrl = `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`;
@@ -53,15 +58,24 @@ const Photos = () => {
     fetchData();
   }, [albumId]);
 
+  function loadPhoto(index) {
+    const photo = photos.find(p => {
+        return p.id === index;
+    });
+    setShowPhoto(true)
+    setSelectedPhoto(photo)
+}
+
   function renderCards() {
     if (loading) {
       return <LinearProgress />;
     }
     return (
+      <>
       <Wrapper>
         {photos.map((photo) => (
           <Card className={classes.root} key={photo.id}>
-            <CardActionArea>
+            <CardActionArea onClick={() => loadPhoto(photo.id)}>
               <CardMedia
                 className={classes.media}
                 image={photo.thumbnailUrl}
@@ -75,7 +89,18 @@ const Photos = () => {
             </CardActionArea>
           </Card>
         ))}
+      
       </Wrapper>
+      <div>
+      {showPhoto ? (
+        <PhotoModal
+          photo={selectedPhoto}
+          show={showPhoto}
+          hide={modalClose}
+        />
+      ) : null}
+      </div>
+      </>
     );
   }
 
