@@ -24,7 +24,7 @@ const Nav = () => {
   return (
     <Wrapper>
       <nav className="menu">
-        <NavItem destination="home" icon="home" page="Início" />
+        <NavItem destination="/home" icon="home" page="Início" />
         <NavItem destination="/posts" icon="sticky-note-o" page="Posts" />
         <NavItem destination="/albums" icon="picture-o" page="Albums" />
         <NavItem destination="/todos" icon="list-ul" page="To-Do" />

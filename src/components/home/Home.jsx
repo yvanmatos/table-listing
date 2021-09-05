@@ -14,7 +14,7 @@ const Lead = styled.p`
 const Home = () => {
   return (
     <Main icon="home" title="Início" subtitle="Projeto de teste">
-      <Display>Bem vindo!</Display>
+      <Display>Bem vindo(a)!</Display>
       <hr />
       <Lead>
         Sistema desenvolvido para consumir e listar dados da API

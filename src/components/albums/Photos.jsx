@@ -41,30 +41,32 @@ const Photos = () => {
   const { albumId } = useParams();
 
   const [photos, setPhotos] = useState([]);
-  const [showPhoto, setShowPhoto] = useState(false)
-  const [selectedPhoto, setSelectedPhoto] = useState([])
+  const [showPhoto, setShowPhoto] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState([]);
   const [loading, setLoading] = useState(false);
-  let modalClose = () => setShowPhoto(false)
 
+  const modalClose = () => setShowPhoto(false);
 
+  
   useEffect(() => {
     const baseUrl = `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`;
     const fetchData = async () => {
       setLoading(true);
       const resp = await axios(baseUrl);
-      setPhotos(resp.data);
+      setPhotos((resp.data));
       setLoading(false);
     };
     fetchData();
   }, [albumId]);
 
+
   function loadPhoto(index) {
-    const photo = photos.find(p => {
-        return p.id === index;
+    const photo = photos.find((p) => {
+      return p.id === index;
     });
-    setShowPhoto(true)
-    setSelectedPhoto(photo)
-}
+    setShowPhoto(true);
+    setSelectedPhoto(photo);
+  }
 
   function renderCards() {
     if (loading) {
@@ -72,34 +74,35 @@ const Photos = () => {
     }
     return (
       <>
-      <Wrapper>
-        {photos.map((photo) => (
-          <Card className={classes.root} key={photo.id}>
-            <CardActionArea onClick={() => loadPhoto(photo.id)}>
-              <CardMedia
-                className={classes.media}
-                image={photo.thumbnailUrl}
-                title="Contemplative Reptile"
-              />
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  {photo.title}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        ))}
-      
-      </Wrapper>
-      <div>
-      {showPhoto ? (
-        <PhotoModal
-          photo={selectedPhoto}
-          show={showPhoto}
-          hide={modalClose}
-        />
-      ) : null}
-      </div>
+        <Wrapper>
+          {photos.map((photo) => (
+            <Card className={classes.root} key={photo.id}>
+              <CardActionArea onClick={() => loadPhoto(photo.id)}>
+                <CardMedia
+                  className={classes.media}
+                  image={photo.thumbnailUrl}
+                  title={photo.title}
+                />
+                <CardContent>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {photo.title}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ))}
+        </Wrapper>
+        {showPhoto ? (
+          <PhotoModal
+            photo={selectedPhoto}
+            show={showPhoto}
+            hide={modalClose}
+          />
+        ) : null}
       </>
     );
   }

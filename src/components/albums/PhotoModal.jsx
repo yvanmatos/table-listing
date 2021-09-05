@@ -8,7 +8,6 @@ const Wrapper = styled(Modal)`
 `;
 
 const PhotoModal = ({ show, hide, photo }) => {
-  console.log(show);
   return (
       <Wrapper open={show} onClose={hide}>
         <img src={photo.url} alt={`Photo number` + photo.id} />

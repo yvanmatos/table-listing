@@ -9,9 +9,6 @@ const Wrapper = styled.footer`
   box-shadow: var(--shadow);
   grid-area: footer;
   
-  @media(max-width: 768px) {
-    min-width: 100vw;
-  }
 `
 
 const Footer = () => {
