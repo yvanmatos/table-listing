@@ -8,18 +8,15 @@ const Wrapper = styled.footer`
   background-color: #fff;
   box-shadow: var(--shadow);
   grid-area: footer;
-  
-`
+`;
 
 const Footer = () => {
   return (
     <Wrapper>
       <span>
-        Desenvolvido com <i className="fa fa-heart" style={{color:"#dc143c"}}/> por
-        <strong>
-          {" "}
-          Yvan Matos
-        </strong>
+        Desenvolvido com{" "}
+        <i className="fa fa-heart" style={{ color: "#dc143c" }} /> por
+        <strong> Yvan Matos</strong>
       </span>
     </Wrapper>
   );

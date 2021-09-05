@@ -8,22 +8,21 @@ const Item = styled(Link)`
   font-weight: 300;
   padding: 15px;
 
-i {
-  margin-right: 5px;
-}
+  i {
+    margin-right: 5px;
+  }
 
-:hover {
-  color: #fff;
-  background: linear-gradient(135deg, #750bb3 0%, #be32da 100%);
-}
+  :hover {
+    color: #fff;
+    background: linear-gradient(135deg, #750bb3 0%, #be32da 100%);
+  }
 
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
     display: inline;
     padding: 10px;
     margin: 0px;
   }
-`
-
+`;
 
 const NavItem = (props) => {
   return (

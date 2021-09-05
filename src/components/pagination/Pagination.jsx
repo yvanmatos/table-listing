@@ -17,17 +17,11 @@ const useStyles = makeStyles((theme) => ({
 const Pagination = (props) => {
   const classes = useStyles();
 
-  const {
-    count,
-    page,
-    rowsPerPage,
-    onPageChange,
-    handleChangeRowsPerPage,
-  } = props;
+  const { count, page, rowsPerPage, onPageChange, handleChangeRowsPerPage } =
+    props;
 
   function TablePaginationActions() {
     const theme = useTheme();
-
 
     const handleFirstPageButtonClick = (event) => {
       onPageChange(event, 0);
@@ -87,8 +81,6 @@ const Pagination = (props) => {
     );
   }
 
-
-
   function renderPagination() {
     return (
       <TableRow>
@@ -109,7 +101,7 @@ const Pagination = (props) => {
       </TableRow>
     );
   }
-  
+
   TablePaginationActions.propTypes = {
     count: PropTypes.number.isRequired,
     onPageChange: PropTypes.func.isRequired,

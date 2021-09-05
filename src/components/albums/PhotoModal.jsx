@@ -9,9 +9,9 @@ const Wrapper = styled(Modal)`
 
 const PhotoModal = ({ show, hide, photo }) => {
   return (
-      <Wrapper open={show} onClose={hide}>
-        <img src={photo.url} alt={`Photo number` + photo.id} />
-      </Wrapper>
+    <Wrapper open={show} onClose={hide}>
+      <img src={photo.url} alt={`Photo number` + photo.id} />
+    </Wrapper>
   );
 };
 

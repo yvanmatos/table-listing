@@ -23,10 +23,10 @@ const HeaderWrapper = styled.header`
     font-weight: 400;
   }
 
-  @media(max-width: 576px) {
+  @media (max-width: 576px) {
     display: none;
   }
-`
+`;
 
 const Header = (props) => {
   return (

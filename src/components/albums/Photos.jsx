@@ -47,18 +47,16 @@ const Photos = () => {
 
   const modalClose = () => setShowPhoto(false);
 
-  
   useEffect(() => {
     const baseUrl = `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`;
     const fetchData = async () => {
       setLoading(true);
       const resp = await axios(baseUrl);
-      setPhotos((resp.data));
+      setPhotos(resp.data);
       setLoading(false);
     };
     fetchData();
   }, [albumId]);
-
 
   function loadPhoto(index) {
     const photo = photos.find((p) => {
