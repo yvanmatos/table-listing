@@ -11,6 +11,14 @@ const Wrapper = styled.main`
     background-color: #fff;
     box-shadow: var(--shadow);
   }
+
+  @media (max-width: 360px) {
+    max-width: 100vw;
+
+    .MuiTableCell-root {
+      padding: 15px 10px;
+    }
+  }
 `;
 
 const Main = (props) => {

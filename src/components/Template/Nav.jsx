@@ -10,11 +10,15 @@ const Wrapper = styled.aside`
   @media (max-width: 768px) {
     .menu {
       display: flex;
-      justify-content: flex-start;
       align-items: center;
+      justify-content: space-around;
 
       height: 100%;
-      justify-content: space-around;
+      word-break: keep-all;
+    }
+
+    a {
+      padding: 15px 5px;
     }
   }
 `;

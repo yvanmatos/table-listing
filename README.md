@@ -1,4 +1,4 @@
-# A Aplicação lista Posts, Albums e To-Dos da API https://jsonplaceholder.typicode.com/ usando React
+# A Aplicação lista Posts, Albums e To-Dos da API https://jsonplaceholder.typicode.com/
 
 ![Página Inicial](https://i.ibb.co/0jJ5RTg/main.jpg)
 
@@ -31,7 +31,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 ## Melhorias :exclamation:
 
 * Adicionar Testes
-* Adicionar Infinite Scroll na rota de Albums
+* Adicionar Infinite Scroll na rota de Photos
 * Melhorar a renderização das tabelas
 
 ## Dificuldades durante o projeto :exclamation:

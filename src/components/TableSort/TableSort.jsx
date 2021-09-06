@@ -25,6 +25,10 @@ const StyledTableHead = styled(TableHead)`
     color: #fefb9f;
     opacity: 1;
   }
+
+  @media (max-width: 360px) {
+    max-width: 250px;
+  }
 `;
 
 const useStyles = makeStyles(() => ({

@@ -1,3 +1,4 @@
+import { Favorite } from "@material-ui/icons";
 import styled from "styled-components";
 
 const Wrapper = styled.footer`
@@ -14,8 +15,8 @@ const Footer = () => {
   return (
     <Wrapper>
       <span>
-        Desenvolvido com{" "}
-        <i className="fa fa-heart" style={{ color: "#dc143c" }} /> por
+        Desenvolvido com {" "}
+        <Favorite style={{color: "red", fontSize:"1em"}} /> por
         <strong> Yvan Matos</strong>
       </span>
     </Wrapper>
