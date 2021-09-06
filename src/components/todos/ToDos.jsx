@@ -13,14 +13,8 @@ import {
   TableFooter,
 } from "@material-ui/core";
 import { green, red } from "@material-ui/core/colors";
-import { Done, Clear } from "@material-ui/icons";
+import { Done, Clear, PlaylistAddCheck } from "@material-ui/icons";
 import styled from "styled-components";
-
-const headerProps = {
-  icon: "list-ul",
-  title: "To-Dos",
-  subtitle: "Lista os To-Dos carregados pela API",
-};
 
 const headCells = [
   { id: "id", numeric: false, disablePadding: false, label: "ID" },
@@ -51,7 +45,6 @@ const ToDos = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -89,7 +82,7 @@ const ToDos = () => {
     return (
       <>
         <Table>
-        <TableSort
+          <TableSort
             headCells={headCells}
             order={order}
             orderBy={orderBy}
@@ -117,24 +110,24 @@ const ToDos = () => {
         {stableSort(toDos, getComparator(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((todo) => (
-          <StyledTableRow key={todo.id}>
-            <TableCell align="left">{todo.id}</TableCell>
-            <TableCell align="left">{todo.title}</TableCell>
-            <TableCell align="left">
-              {todo.completed ? (
-                <Status>
-                  <Done fontSize="large" style={{ color: green[500] }} />
-                  <span>Completed</span>
-                </Status>
-              ) : (
-                <Status>
-                  <Clear fontSize="large" style={{ color: red[500] }} />
-                  <span>Not Completed</span>
-                </Status>
-              )}
-            </TableCell>
-          </StyledTableRow>
-        ))}
+            <StyledTableRow key={todo.id}>
+              <TableCell align="left">{todo.id}</TableCell>
+              <TableCell align="left">{todo.title}</TableCell>
+              <TableCell align="left">
+                {todo.completed ? (
+                  <Status>
+                    <Done fontSize="large" style={{ color: green[500] }} />
+                    <span>Completed</span>
+                  </Status>
+                ) : (
+                  <Status>
+                    <Clear fontSize="large" style={{ color: red[500] }} />
+                    <span>Not Completed</span>
+                  </Status>
+                )}
+              </TableCell>
+            </StyledTableRow>
+          ))}
 
         {emptyRows > 0 && (
           <StyledTableRow style={{ height: 53 * emptyRows }}>
@@ -145,7 +138,15 @@ const ToDos = () => {
     );
   }
 
-  return <Main {...headerProps}>{renderTable()}</Main>;
+  return (
+    <Main
+      icon={PlaylistAddCheck}
+      title="To-Dos"
+      subtitle="Lista os To-Dos carregados pela API"
+    >
+      {renderTable()}
+    </Main>
+  );
 };
 
 export default ToDos;

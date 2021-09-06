@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router";
 import Main from "../Template/Main";
 import { makeStyles } from "@material-ui/core";
+import { Image } from "@material-ui/icons";
 import {
   Typography,
   LinearProgress,
@@ -13,12 +14,6 @@ import {
 } from "@material-ui/core";
 import styled from "styled-components";
 import PhotoModal from "./PhotoModal";
-
-const headerProps = {
-  icon: "picture-o",
-  title: "Photos",
-  subtitle: "Lista as Fotos de acordo com o Album clicado",
-};
 
 const useStyles = makeStyles({
   root: {
@@ -105,7 +100,15 @@ const Photos = () => {
     );
   }
 
-  return <Main {...headerProps}>{renderCards()}</Main>;
+  return (
+    <Main
+      icon={Image}
+      title="Photos"
+      subtitle="Lista as Photos carregadas pela API"
+    >
+      {renderCards()}
+    </Main>
+  );
 };
 
 export default Photos;

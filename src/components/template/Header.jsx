@@ -12,8 +12,15 @@ const HeaderWrapper = styled.header`
   grid-area: header;
 
   h1 {
+    display: flex;
     font-size: 2em;
     margin: 0;
+  }
+
+  h1 > svg {
+    margin-right: 10px;
+    height: 1.5em;
+    width: 1.5em;
   }
 
   p {
@@ -29,10 +36,12 @@ const HeaderWrapper = styled.header`
 `;
 
 const Header = (props) => {
+  const Icon = props.icon;
+
   return (
     <HeaderWrapper>
       <h1>
-        <i className={`fa fa-${props.icon}`} /> {props.title}
+        <Icon /> {props.title}
       </h1>
       <p>{props.subtitle}</p>
     </HeaderWrapper>

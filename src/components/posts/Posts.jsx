@@ -12,14 +12,8 @@ import {
   TableRow,
   TableFooter,
 } from "@material-ui/core";
+import { ViewList } from "@material-ui/icons";
 import styled from "styled-components";
-
-
-const headerProps = {
-  icon: "sticky-note-o",
-  title: "Posts",
-  subtitle: "Lista os Posts carregados pela API",
-};
 
 const headCells = [
   { id: "id", numeric: false, disablePadding: false, label: "ID" },
@@ -119,7 +113,15 @@ const Posts = () => {
     );
   }
 
-  return <Main {...headerProps}>{renderTable()}</Main>;
+  return (
+    <Main
+      icon={ViewList}
+      title="Posts"
+      subtitle="Lista os Posts carregados pela API"
+    >
+      {renderTable()}
+    </Main>
+  );
 };
 
 export default Posts;

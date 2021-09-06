@@ -13,14 +13,8 @@ import {
   TableRow,
   TableFooter,
 } from "@material-ui/core";
-import { Cached } from "@material-ui/icons";
+import { Cached, Image } from "@material-ui/icons";
 import styled from "styled-components";
-
-const headerProps = {
-  icon: "picture-o",
-  title: "Albums",
-  subtitle: "Lista os Albums carregados pela API",
-};
 
 const headCells = [
   { id: "id", numeric: false, disablePadding: false, label: "ID" },
@@ -162,7 +156,15 @@ const Albuns = () => {
     );
   }
 
-  return <Main {...headerProps}>{renderTable()}</Main>;
+  return (
+    <Main
+      icon={Image}
+      title="Albums"
+      subtitle="Lista os Albums carregados pela API"
+    >
+      {renderTable()}
+    </Main>
+  );
 };
 
 export default Albuns;

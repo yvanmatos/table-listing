@@ -1,3 +1,4 @@
+import { Home } from "@material-ui/icons";
 import styled from "styled-components";
 import Main from "../Template/Main";
 
@@ -15,10 +16,20 @@ const Display = styled.div`
 const Lead = styled.p`
   margin-bottom: 5px;
   line-height: 1.5;
+
+  a {
+    text-decoration: underline;
+  }
+
+  a:hover,
+  a:active {
+    color: #750bb3;
+  }
 `;
-const Home = () => {
+
+const HomePage = () => {
   return (
-    <Main icon="home" title="Início" subtitle="Projeto de teste">
+    <Main icon={Home} title="Início" subtitle="Projeto de teste">
       <Display>Bem vindo(a)!</Display>
       <hr />
       <Lead>
@@ -33,4 +44,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

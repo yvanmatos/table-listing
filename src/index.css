@@ -20,6 +20,8 @@ code {
     monospace;
 }
 
-.table-dark {
-  color: indigo;
+::selection {
+  color: white;
+  background-color: rgba(119, 16, 223, 0.7);
 }
+

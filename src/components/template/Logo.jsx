@@ -17,6 +17,7 @@ const Wrapper = styled.aside`
   @media (max-width: 576px) {
     img {
       width: 300px;
+      height: 90px;
     }
   }
 `;
