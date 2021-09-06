@@ -1,13 +1,14 @@
 import axios from "axios";
 import { LinearProgress } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import Main from "../template/Main";
-import Pagination from "../pagination/Pagination";
+import Main from "../Template/Main";
+import Pagination from "../Pagination/Pagination";
+import TableSort from "../TableSort/TableSort";
+import { stableSort, getComparator } from "../../services/sort.js";
 import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   TableFooter,
 } from "@material-ui/core";
@@ -21,15 +22,11 @@ const headerProps = {
   subtitle: "Lista os To-Dos carregados pela API",
 };
 
-const StyledTableHead = styled(TableHead)`
-  && {
-    background-color: #750bb3;
-  }
-
-  .MuiTableCell-head {
-    color: #fff;
-  }
-`;
+const headCells = [
+  { id: "id", numeric: true, disablePadding: false, label: "ID" },
+  { id: "title", numeric: false, disablePadding: false, label: "Title" },
+  { id: "completed", numeric: true, disablePadding: false, label: "Status" },
+];
 
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(even) {
@@ -39,7 +36,7 @@ const StyledTableRow = styled(TableRow)`
 
 const Status = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
   span {
@@ -47,14 +44,14 @@ const Status = styled.div`
   }
 `;
 
-const Posts = () => {
+const ToDos = () => {
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("id");
   const [toDos, setToDos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - toDos.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -64,6 +61,15 @@ const Posts = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - toDos.length) : 0;
 
   useEffect(() => {
     const baseUrl = "https://jsonplaceholder.typicode.com/todos";
@@ -83,13 +89,12 @@ const Posts = () => {
     return (
       <>
         <Table>
-          <StyledTableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell align="center">Status</TableCell>
-            </TableRow>
-          </StyledTableHead>
+        <TableSort
+            headCells={headCells}
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+          />
           {renderRows()}
           <TableFooter>
             <Pagination
@@ -109,14 +114,13 @@ const Posts = () => {
   function renderRows() {
     return (
       <TableBody>
-        {(rowsPerPage > 0
-          ? toDos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          : toDos
-        ).map((todo) => (
+        {stableSort(toDos, getComparator(order, orderBy))
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((todo) => (
           <StyledTableRow key={todo.id}>
-            <TableCell>{todo.id}</TableCell>
+            <TableCell align="left">{todo.id}</TableCell>
             <TableCell align="left">{todo.title}</TableCell>
-            <TableCell align="center">
+            <TableCell align="left">
               {todo.completed ? (
                 <Status>
                   <Done fontSize="large" style={{ color: green[500] }} />
@@ -144,4 +148,4 @@ const Posts = () => {
   return <Main {...headerProps}>{renderTable()}</Main>;
 };
 
-export default Posts;
+export default ToDos;

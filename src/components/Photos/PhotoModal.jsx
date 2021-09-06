@@ -5,6 +5,10 @@ const Wrapper = styled(Modal)`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    max-width: 100vw;
+  }
 `;
 
 const PhotoModal = ({ show, hide, photo }) => {

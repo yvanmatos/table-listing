@@ -1,9 +1,9 @@
 import { Switch, Route, Redirect } from "react-router";
-import Home from '../components/home/Home'
-import Posts from "../components/posts/Posts";
-import Albums from "../components/albums/Albums";
-import ToDos from '../components/todos/ToDos'
-import Photos from "../components/albums/Photos";
+import Home from '../components/Home/Home'
+import Posts from "../components/Posts/Posts";
+import Albums from "../components/Albums/Albums";
+import ToDos from '../components/ToDos/ToDos'
+import Photos from "../components/Photos/Photos";
 
 const Routes = (props) => {
   return(

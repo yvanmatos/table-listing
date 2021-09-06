@@ -1,14 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Main from "../template/Main";
-import Pagination from "../pagination/Pagination";
+import Main from "../Template/Main";
+import Pagination from "../Pagination/Pagination";
+import TableSort from "../TableSort/TableSort";
+import { stableSort, getComparator } from "../../services/sort.js";
 import { Button, LinearProgress } from "@material-ui/core";
 import { Redirect } from "react-router";
 import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   TableFooter,
 } from "@material-ui/core";
@@ -21,15 +22,17 @@ const headerProps = {
   subtitle: "Lista os Albums carregados pela API",
 };
 
-const StyledTableHead = styled(TableHead)`
-  && {
-    background-color: #750bb3;
-  }
-
-  .MuiTableCell-head {
-    color: #fff;
-  }
-`;
+const headCells = [
+  { id: "id", numeric: true, disablePadding: false, label: "ID" },
+  { id: "title", numeric: false, disablePadding: false, label: "Title" },
+  {
+    id: "",
+    numeric: false,
+    disablePadding: false,
+    label: "Action",
+    unsorted: true,
+  },
+];
 
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(even) {
@@ -49,6 +52,8 @@ const StyledButton = styled(Button)`
 `;
 
 const Albuns = () => {
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("id");
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -58,9 +63,6 @@ const Albuns = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - albums.length) : 0;
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -69,6 +71,15 @@ const Albuns = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - albums.length) : 0;
 
   useEffect(() => {
     const baseUrl = "https://jsonplaceholder.typicode.com/albums";
@@ -98,13 +109,12 @@ const Albuns = () => {
     return (
       <>
         <Table>
-          <StyledTableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell align="center">Action</TableCell>
-            </TableRow>
-          </StyledTableHead>
+          <TableSort
+            headCells={headCells}
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+          />
           {renderRows()}
           <TableFooter>
             <Pagination
@@ -124,25 +134,24 @@ const Albuns = () => {
   function renderRows() {
     return (
       <TableBody>
-        {(rowsPerPage > 0
-          ? albums.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          : albums
-        ).map((album) => (
-          <StyledTableRow key={album.id}>
-            <TableCell>{album.id}</TableCell>
-            <TableCell align="left">{album.title}</TableCell>
-            <TableCell align="center">
-              <StyledButton
-                variant="contained"
-                size="medium"
-                startIcon={<Cached />}
-                onClick={() => navigateToPage(album.id)}
-              >
-                Load Photos
-              </StyledButton>
-            </TableCell>
-          </StyledTableRow>
-        ))}
+        {stableSort(albums, getComparator(order, orderBy))
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((album) => (
+            <StyledTableRow key={album.id}>
+              <TableCell align="left">{album.id}</TableCell>
+              <TableCell align="left">{album.title}</TableCell>
+              <TableCell align="center">
+                <StyledButton
+                  variant="contained"
+                  size="small"
+                  startIcon={<Cached />}
+                  onClick={() => navigateToPage(album.id)}
+                >
+                  Load Photos
+                </StyledButton>
+              </TableCell>
+            </StyledTableRow>
+          ))}
 
         {emptyRows > 0 && (
           <StyledTableRow style={{ height: 53 * emptyRows }}>

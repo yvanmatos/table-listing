@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
-import Main from "../template/Main";
+import Main from "../Template/Main";
 import { makeStyles } from "@material-ui/core";
 import {
   Typography,

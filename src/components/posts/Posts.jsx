@@ -1,17 +1,19 @@
 import axios from "axios";
 import { LinearProgress } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import Main from "../template/Main";
+import Main from "../Template/Main";
+import Pagination from "../Pagination/Pagination";
+import TableSort from "../TableSort/TableSort";
+import { stableSort, getComparator } from "../../services/sort.js";
 import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   TableFooter,
 } from "@material-ui/core";
 import styled from "styled-components";
-import Pagination from "../pagination/Pagination";
+
 
 const headerProps = {
   icon: "sticky-note-o",
@@ -19,15 +21,11 @@ const headerProps = {
   subtitle: "Lista os Posts carregados pela API",
 };
 
-const StyledTableHead = styled(TableHead)`
-  && {
-    background-color: #750bb3;
-  }
-
-  .MuiTableCell-head {
-    color: #fff;
-  }
-`;
+const headCells = [
+  { id: "id", numeric: true, disablePadding: false, label: "ID" },
+  { id: "title", numeric: false, disablePadding: false, label: "Title" },
+  { id: "body", numeric: false, disablePadding: false, label: "Content" },
+];
 
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(even) {
@@ -36,10 +34,18 @@ const StyledTableRow = styled(TableRow)`
 `;
 
 const Posts = () => {
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("id");
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -71,17 +77,15 @@ const Posts = () => {
     return (
       <>
         <Table>
-          <StyledTableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Content</TableCell>
-            </TableRow>
-          </StyledTableHead>
+          <TableSort
+            headCells={headCells}
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+          />
           {renderRows()}
           <TableFooter>
             <Pagination
-              array={posts}
               page={page}
               count={posts.length}
               rowsPerPage={rowsPerPage}
@@ -97,16 +101,15 @@ const Posts = () => {
   function renderRows() {
     return (
       <TableBody>
-        {(rowsPerPage > 0
-          ? posts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          : posts
-        ).map((post) => (
-          <StyledTableRow key={post.id}>
-            <TableCell>{post.id}</TableCell>
-            <TableCell align="left">{post.title}</TableCell>
-            <TableCell align="left">{post.body}</TableCell>
-          </StyledTableRow>
-        ))}
+        {stableSort(posts, getComparator(order, orderBy))
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((post) => (
+            <StyledTableRow key={post.id}>
+              <TableCell align="left">{post.id}</TableCell>
+              <TableCell align="left">{post.title}</TableCell>
+              <TableCell align="left">{post.body}</TableCell>
+            </StyledTableRow>
+          ))}
         {emptyRows > 0 && (
           <StyledTableRow style={{ height: 53 * emptyRows }}>
             <TableCell />
