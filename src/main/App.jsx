@@ -1,10 +1,10 @@
 import "font-awesome/css/font-awesome.min.css";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
-import Nav from "../components/template/Nav";
-import Logo from "../components/template/Logo";
+import Nav from "../components/Template/Nav";
+import Logo from "../components/Template/Logo";
 import Routes from "./Routes";
-import Footer from "../components/template/Footer";
+import Footer from "../components/Template/Footer";
 
 function App() {
   return (

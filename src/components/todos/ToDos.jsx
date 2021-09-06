@@ -23,9 +23,9 @@ const headerProps = {
 };
 
 const headCells = [
-  { id: "id", numeric: true, disablePadding: false, label: "ID" },
+  { id: "id", numeric: false, disablePadding: false, label: "ID" },
   { id: "title", numeric: false, disablePadding: false, label: "Title" },
-  { id: "completed", numeric: true, disablePadding: false, label: "Status" },
+  { id: "completed", numeric: false, disablePadding: false, label: "Status" },
 ];
 
 const StyledTableRow = styled(TableRow)`
