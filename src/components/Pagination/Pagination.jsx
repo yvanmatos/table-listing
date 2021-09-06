@@ -1,22 +1,38 @@
 import PropTypes from "prop-types";
-import { useTheme, makeStyles } from "@material-ui/core";
+import { useTheme } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import { TablePagination, TableRow } from "@material-ui/core";
+import styled from "styled-components";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-  },
-}));
+const StyledPagination = styled(TablePagination)`
+  @media (max-width: 576px) {
+    .MuiToolbar-root {
+      margin-top: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0;
+      font-size: 1.2rem;
+    }
+  }
+`;
+
+const StyledControls = styled.div`
+  flex-shrink: 0;
+  margin-right: 20px;
+
+  @media (max-width: 576px) {
+    margin: 0;
+    .MuiSvgIcon-root {
+      font-size: 1.75rem;
+    }
+  }
+`;
 
 const Pagination = (props) => {
-  const classes = useStyles();
-
   const { count, page, rowsPerPage, onPageChange, handleChangeRowsPerPage } =
     props;
 
@@ -40,7 +56,7 @@ const Pagination = (props) => {
     };
 
     return (
-      <div className={classes.root}>
+      <StyledControls>
         <IconButton
           onClick={handleFirstPageButtonClick}
           disabled={page === 0}
@@ -77,14 +93,14 @@ const Pagination = (props) => {
         >
           {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
         </IconButton>
-      </div>
+      </StyledControls>
     );
   }
 
   function renderPagination() {
     return (
       <TableRow>
-        <TablePagination
+        <StyledPagination
           rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
           colSpan={3}
           count={count}
